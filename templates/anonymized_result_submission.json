@@ -1,0 +1,13 @@
+{
+  "participant_id": "anon_xxx",
+  "engine_version": "0.1",
+  "calibration_cases": 0,
+  "blind_cases": 0,
+  "aggregate": {
+    "strong_match": 0,
+    "partial_match": 0,
+    "deviation": 0,
+    "unknown": 0
+  },
+  "errors": []
+}

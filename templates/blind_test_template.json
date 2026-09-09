@@ -1,0 +1,19 @@
+{
+  "test_id": "blind_test_001",
+  "frozen_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "engine_version": "0.1",
+  "persona_version": "local",
+  "cases": [
+    {
+      "case_id": "B01",
+      "scenario": "Write scenario here.",
+      "prediction": "Freeze before answer.",
+      "prediction_confidence": 0.0,
+      "expected_mechanism": [],
+      "acceptable_region": [],
+      "actual": null,
+      "score": null,
+      "error_layer": null
+    }
+  ]
+}

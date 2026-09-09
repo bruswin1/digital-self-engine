@@ -1,0 +1,19 @@
+{
+  "person_id": "synthetic_example_only",
+  "stable_core": [
+    {
+      "name": "autonomy",
+      "weight": 0.8,
+      "source": "synthetic"
+    }
+  ],
+  "conditional_tendencies": [
+    {
+      "if": "decision_is_personal_and_reversible",
+      "then": "prefer_self_choice",
+      "weight": 0.7,
+      "source": "synthetic"
+    }
+  ],
+  "unknown_regions": []
+}
