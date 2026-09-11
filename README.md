@@ -1,219 +1,184 @@
 # Digital Self Engine
 
-An open research prototype for building and testing a **generic digital-self engine**.
+A research project for building a digital agent that behaves as much as possible like a specific real person.
 
-The central question is:
+The core question is:
 
-> Can the same Generic Engine learn very different people without hard-coding any one person's personality?
+> If we know enough about a person, can we build an agent that thinks, reacts, decides, remembers, hesitates, and changes in a way that still feels like that person?
 
-This project separates the **shared engine** from the **person-specific Persona Package**, then tests whether the same engine can model different people, predict unseen situations, and continue learning without collapsing everyone toward an “average person.”
+The goal is not to create a personality type.
 
----
-
-## Start here
-
-If you want to test the project:
-
-1. Read [TESTING.md](TESTING.md)
-2. Copy `templates/empty_persona.json`
-3. Build your Persona Package locally
-4. Use calibration cases to collect person-specific evidence
-5. Prepare new blind scenarios that were not used during calibration
-6. Freeze predictions before the participant answers
-7. Collect the participant's real answers
-8. Score only after the blind-test chain ends
-9. Submit anonymized error summaries, not raw private data
-
-The most useful contribution is not:
-
-> “My model scored 90%.”
-
-The most useful contribution is:
-
-> “Here is a situation where the engine predicted the wrong mechanism, and here is the smallest structural change that may explain the failure.”
+The goal is to model **an individual person**.
 
 ---
 
-## Privacy first
+## What we want
 
-Do **not** upload raw personal data by default.
+When a new situation appears, the system should not answer like an average person.
 
-Please avoid publishing:
+It should try to answer:
 
-- real names
-- email addresses
-- phone numbers
-- home or work addresses
-- private chat logs
-- health or medical information
-- financial identifiers
-- intimate relationship details
-- identifiable third-party information
+> “What would this person most likely think, feel, say, or do?”
 
-Keep personal Persona Packages on your own device unless you have deliberately anonymized them.
+A realistic digital self may:
 
-See [PRIVACY.md](PRIVACY.md).
+- hesitate
+- change its mind
+- make mistakes
+- trust different people differently
+- feel less confident under responsibility
+- keep emotional residue
+- hold conflicting thoughts at the same time
+
+The goal is not the best decision.
+
+The goal is the decision that is most consistent with that person.
 
 ---
 
-## Core design principle
+## How it works
 
-The project is built around a strict separation:
+We separate the system into two parts.
 
 ### Generic Engine
 
-The Generic Engine contains mechanisms that should be reusable across people, such as:
+Shared mechanisms such as:
 
-- state vs trait separation
-- memory retrieval
-- meaning memory
-- relationship modulation
-- intuition before deeper analysis
-- decision arbitration
-- competence vs subjective confidence
-- process memory
-- conditional policies
-- self narrative
-- motivation and commitment
-- outcome attribution
-- prediction-error attribution
+- memory
+- current state
+- intuition
+- reasoning
+- relationships
+- competence
+- confidence
+- responsibility
+- motivation
+- habits
+- learning
 - identity continuity
-- long-term growth
-- unknown-region handling
-- provenance tracking
-
-The Generic Engine should **not** contain one participant's personal experiences, memories, preferences, or relationship history.
 
 ### Persona Package
 
-The Persona Package contains person-specific evidence and parameters, such as:
+Person-specific information such as:
 
-- stable tendencies
-- conditional tendencies
-- values
-- current state
 - memories
-- relationship context
-- competence beliefs
+- values
+- relationships
+- decision tendencies
 - confidence patterns
-- self narrative
-- unresolved thoughts
-- unknown regions
-- evidence provenance
+- personal rules
+- unknown areas
 
-Changing people should mean:
+So:
 
-> Change the Persona Package, not the Generic Engine.
+> Same Engine + different Persona Package = different person
 
----
-
-## Why this matters
-
-A model can appear accurate simply because it has been manually tuned to one person.
-
-That is not enough.
-
-The harder question is whether:
-
-- Person A can become A
-- Person B can become B
-- Person C can become C
-
-while the engine itself stays substantially unchanged.
-
-This repository is designed to make that claim testable.
+If every new person requires rewriting the engine, the engine is not truly general.
 
 ---
 
-## Validation philosophy
+## How we test it
 
-Calibration and validation must be separated.
+We use blind prediction.
 
-### Calibration
+1. Learn from earlier evidence
+2. Create a new unseen situation
+3. Predict the person's response
+4. Freeze the prediction
+5. Ask the real person
+6. Compare prediction with reality
+7. Update the model only afterward
 
-Answers collected before prediction are **training/calibration evidence**.
+The rule is:
 
-They can be used to build or refine the Persona Package.
+> prediction first, answer second
 
-### Blind validation
-
-Before asking the participant a new question, save:
-
-- exact scenario
-- model prediction
-- prediction confidence
-- expected mechanism
-- acceptable response region
-- scoring rule
-
-Then freeze that prediction.
-
-Only after the prediction is frozen should the participant answer.
-
-### Reveal and score
-
-After the blind-test chain is complete, classify each result as:
-
-- `strong_match`
-- `partial_match`
-- `deviation`
-- `unknown`
-
-Then identify the smallest likely error layer.
-
-Examples:
-
-- state mistaken for trait
-- confidence mistaken for competence
-- relationship context missed
-- motivation overestimated
-- responsibility underestimated
-- process memory ignored
-- identity continuity drift
-- insufficient evidence
-
-The model should be updated **after** evaluation, not during the blind run.
+Wrong predictions are useful because they reveal what the model misunderstood.
 
 ---
 
-## Evidence-first rule
+## The harder problem: change
 
-Do not jump directly from one answer to a personality trait.
+A digital self should not stay frozen forever.
 
-Store the evidence first.
+Real people change.
 
-Example:
+But if the agent changes too quickly, it may stop feeling like the original person.
 
-Bad:
+So another major research question is:
 
-> “The participant hesitated once, therefore they are indecisive.”
-
-Better:
-
-> “In this high-responsibility context, the participant hesitated.”
-
-Then test whether the pattern repeats across:
-
-- different stakes
-- different relationships
-- different domains
-- different emotional states
-- different levels of reversibility
-
-Stable traits should be updated more slowly than temporary state or process rules.
+> How much can a digital self change while still remaining a plausible continuation of the same person?
 
 ---
 
-## Unknown is a valid result
+## Current status
 
-The engine should not invent a personality rule simply because data are missing.
+This is an early research prototype.
 
-If evidence is weak, contradictory, or absent, use an unknown region.
+It currently includes:
 
-Examples:
+- Generic Engine prototype
+- Persona Package structure
+- blind-test protocol
+- frozen-prediction verification
+- cross-person testing
+- identity-continuity ideas
+- privacy and anonymized contribution rules
 
-```json
-{
-  "region": "career_decisions_under_social_pressure",
-  "reason": "insufficient evidence"
-}
+It does **not** claim:
+
+- consciousness transfer
+- perfect personality reconstruction
+- certain prediction of human behavior
+- scientific validation
+
+---
+
+## Want to test yourself?
+
+You do not need to be a programmer.
+
+Start with:
+
+- [NO_CODE_TESTING.md](NO_CODE_TESTING.md)
+- [TESTING.md](TESTING.md)
+- [PRIVACY.md](PRIVACY.md)
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+
+Programmers can also use:
+
+`tools/blind_test_cli.py`
+
+---
+
+## Privacy
+
+Do not upload raw personal data.
+
+Keep private Persona Packages on your own device.
+
+This public repository contains no private Person A data.
+
+---
+
+## Long-term vision
+
+The long-term goal is not a chatbot that merely knows facts about you.
+
+It is a system that preserves enough of your:
+
+- ways of thinking
+- ways of deciding
+- memories
+- relationships
+- emotional patterns
+- uncertainty
+- habits
+- contradictions
+- growth trajectory
+
+that, when something new happens, its response still feels like:
+
+> “Yes — that is probably how this person would respond.”
+
+That is the goal of Digital Self Engine.
